@@ -11,6 +11,20 @@ function theme_enqueue_styles() {
         array('parent-style')
     );
 }
-//
-// Your code goes below
-//
+function create_posttype() {
+ 
+    register_post_type( 'Films',
+    // CPT Options
+        array(
+            'labels' => array(
+                'name' => __( 'Films' ),
+                'singular_name' => __( 'Films' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'films'),
+        )
+    );
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
