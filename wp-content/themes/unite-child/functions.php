@@ -202,3 +202,26 @@ add_action( 'init', 'custom_post_type', 0 );
     
     register_taxonomy( 'actor', array( 'films' ), $args );
  }
+
+function get_recent_films() {
+    $film_args = array('post_type' => 'film', 'posts_per_page' => 5);
+    $film_exc = new WP_Query($film_args);
+    $html = '<div class="recent-films">';
+    if($film_exc->have_posts()){
+        $html .= '<ul>';
+        while($film_exc->have_posts()){
+            $film_exc->the_post();
+            $film_id = get_the_ID();
+            $html .= '<li><a href="'.get_permalink().'">'.get_the_title().'</a></li>';
+        }
+        $html .= '</ul>';
+        wp_reset_query();
+    }
+    
+    
+    add_shortcode('get_recent_films', 'get_recent_films');
+    else{
+        $html .= '<p>No Film Found.</p>';
+    }
+    
+}
