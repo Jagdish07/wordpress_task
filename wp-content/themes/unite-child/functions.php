@@ -204,7 +204,7 @@ add_action( 'init', 'custom_post_type', 0 );
  }
 
 function get_recent_films() {
-    $film_args = array('post_type' => 'film', 'posts_per_page' => 5);
+    $film_args = array('post_type' => 'films', 'posts_per_page' => 5);
     $film_exc = new WP_Query($film_args);
     $html = '<div class="recent-films">';
     if($film_exc->have_posts()){
@@ -217,11 +217,9 @@ function get_recent_films() {
         $html .= '</ul>';
         wp_reset_query();
     }
-    
-    
-    add_shortcode('get_recent_films', 'get_recent_films');
     else{
         $html .= '<p>No Film Found.</p>';
     }
-    
+    return $html;
 }
+add_shortcode('get_recent_films', 'get_recent_films');
